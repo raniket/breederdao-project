@@ -1,0 +1,36 @@
+{
+  "name": "breederdao",
+  "version": "1.0.0",
+  "description": "<!-- Generate node js project readme file content --> # breederdao-project",
+  "main": "index.js",
+  "scripts": {
+    "test": "node_modules/jest/bin/jest.js --verbose --runInBand",
+    "coverage": "node_modules/jest/bin/jest.js --coverage",
+    "build": "tsc",
+    "start": "node ./dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raniket/breederdao-project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/raniket/breederdao-project/issues"
+  },
+  "homepage": "https://github.com/raniket/breederdao-project#readme",
+  "dependencies": {
+    "apollo-server": "^3.6.5",
+    "axios": "^0.26.1",
+    "dotenv": "^16.0.0",
+    "graphql": "^16.3.0",
+    "jest": "^27.5.1",
+    "mongoose": "^6.2.8",
+    "typescript": "^4.6.2",
+    "web3": "^1.7.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.4.1",
+    "ts-jest": "^27.1.4"
+  }
+}
