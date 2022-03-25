@@ -37,7 +37,8 @@ export const resolvers = {
 
     Mutation: {
         loadData: async (_: any) => {
-            return await loadData.execute();
+            await loadData.execute();
+            return "Data loaded";
         }
     }
 };
