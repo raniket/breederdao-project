@@ -52,6 +52,6 @@ jobs:
       #       # npm run build && npm run start
       #     '
       # run: echo "$SSH_PRIVATE_KEY" > private_key && chmod 600 private_key && ssh -i private_key ${USERNAME}@${HOST_DNS}
-      run: touch private.cer && echo "SSH_PRIVATE_KEY" > private.cer && cat private.cer
+      run: touch private.cer && echo ${{ secrets.EC2_SSH_KEY }} > private.cer && cat private.cer
     - name: Do ssh
       run: ssh -o StrictHostKeyChecking=no -i private.cer ${USERNAME}@${HOST_DNS} 
