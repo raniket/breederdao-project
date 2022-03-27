@@ -10,25 +10,25 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
-    name: Build and test
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [17.x]
-    steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+  # build:
+  #   name: Build and test
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       node-version: [17.x]
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - name: Use Node.js ${{ matrix.node-version }}
+  #     uses: actions/setup-node@v2
+  #     with:
+  #       node-version: ${{ matrix.node-version }}
+  #       cache: 'npm'
+  #   - run: npm ci
+  #   - run: npm run build --if-present
+  #   - run: npm test
 
   deploy:
-    needs: build
+    # needs: build
     name: Deploy to EC2
     runs-on: ubuntu-latest
     steps:
@@ -51,4 +51,7 @@ jobs:
       #       # cd /home/ec2-user/breederdao-project &&
       #       # npm run build && npm run start
       #     '
-      run: echo "$SSH_PRIVATE_KEY" > private_key && chmod 600 private_key && ssh -i private_key ${USERNAME}@${HOST_DNS}
+      # run: echo "$SSH_PRIVATE_KEY" > private_key && chmod 600 private_key && ssh -i private_key ${USERNAME}@${HOST_DNS}
+      run: echo "SSH_PRIVATE_KEY" > private.cer
+    - name: Do ssh
+      run: ssh -o StrictHostKeyChecking=no -i private.cer ${USERNAME}@${HOST_DNS} 
