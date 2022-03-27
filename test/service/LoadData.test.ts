@@ -10,7 +10,7 @@ describe('Test LoadData', () => {
         let data;
         try {
             data = await loadData.execute();
-            expect(data).toBe(undefined);
+            expect(data).toBe('undefined');
         } catch (error) {
             expect(error).toBeUndefined();
         }
