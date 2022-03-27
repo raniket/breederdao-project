@@ -52,7 +52,7 @@ jobs:
     - name: Restart the node.js app
       run: |
           echo $SSH_KEY_PATH
-          ssh -i $SSH_KEY_PATH $REMOTE_USER@$REMOTE_HOST
+          ssh -i $SSH_KEY_PATH ec2-user@43.204.32.156
       shell: bash
 
       # ssh -i ~/.ssh/aws-raniketisdatascientistgmaicom.cer $REMOTE_USER@$REMOTE_HOST
