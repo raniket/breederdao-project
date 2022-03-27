@@ -36,6 +36,12 @@ jobs:
       uses: actions/checkout@v2
     - name: Deploy to EC2 Server
       uses: easingthemes/ssh-deploy@main
+      env:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.HOST_DNS }}
+          REMOTE_USER: ${{ secrets.USERNAME }}
+          TARGET: ${{ secrets.TARGET_DIR }}
+          SSH_KEY_PATH: ${{ github.workspace }}/../private.key
     - name: Create ssh key
       run: |   
           mkdir -p ~/.ssh/
@@ -43,12 +49,6 @@ jobs:
           sudo chmod 600 ../private.key
           echo "$REMOTE_HOST" > ~/.ssh/known_hosts
       shell: bash
-      env:
-          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-          REMOTE_HOST: ${{ secrets.HOST_DNS }}
-          REMOTE_USER: ${{ secrets.USERNAME }}
-          TARGET: ${{ secrets.TARGET_DIR }}
-          SSH_KEY_PATH: ${{ github.workspace }}/../private.key
     - name: Restart the node.js app
       run: |
           ssh -i $SSH_KEY_PATH $REMOTE_USER@$REMOTE_HOST
