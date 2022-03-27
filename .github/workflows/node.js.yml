@@ -52,6 +52,13 @@ jobs:
       #       # npm run build && npm run start
       #     '
       # run: echo "$SSH_PRIVATE_KEY" > private_key && chmod 600 private_key && ssh -i private_key ${USERNAME}@${HOST_DNS}
-      run: touch private.cer && echo ${{ secrets.EC2_SSH_KEY }} > private.cer && cat private.cer
-    - name: Do ssh
-      run: ssh -o StrictHostKeyChecking=no -i private.cer ${USERNAME}@${HOST_DNS} 
+    #   run: touch private.cer && echo ${{ secrets.EC2_SSH_KEY }} > private.cer && cat private.cer
+    # - name: Do ssh
+    #   run: ssh -o StrictHostKeyChecking=no -i private.cer ${USERNAME}@${HOST_DNS} 
+      run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_PRIVATE_KEY" > ../private.key
+          sudo chmod 600 ../private.key
+          echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          ssh -i ~/.ssh/private.key ${USERNAME}@${HOST_DNS} "cd /home/ec2-user/breederdao-project && npm run build && npm run start"
+      shell: bash
