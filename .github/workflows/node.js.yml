@@ -32,10 +32,6 @@ jobs:
     name: Deploy to EC2
     runs-on: ubuntu-latest
     steps:
-    - name: "Echo envs"
-      run: echo "${{ secrets.EC2_SSH_KEY }} ${{ secrets.HOST_DNS }} ${{ secrets.USERNAME }} ${{ secrets.TARGET_DIR }}"
-    - name: "Echo key"
-      run: echo  "$EC2_SSH_KEY"
     - name: Checkout the files
       uses: actions/checkout@v2
     - name: Deploy to EC2 Server
@@ -48,9 +44,10 @@ jobs:
     - name: Restart the node.js app
       run: |
           echo "$SSH_PRIVATE_KEY" > private_key && chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ${USERNAME}@${HOST_DNS} '
+          cat private_key
+          # ssh -o StrictHostKeyChecking=no -i private_key ${USERNAME}@${HOST_DNS} '
           
             #Now we have got the access of EC2 and we will start the deploy .
-            cd /home/ec2-user/breederdao-project &&
-            npm run build && npm run start
+            # cd /home/ec2-user/breederdao-project &&
+            # npm run build && npm run start
           '
