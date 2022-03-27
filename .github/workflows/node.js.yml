@@ -56,7 +56,7 @@ jobs:
     # - name: Do ssh
     #   run: ssh -o StrictHostKeyChecking=no -i private.cer ${USERNAME}@${HOST_DNS} 
       run: |
-          mkdir ~/.ssh/
+          mkdir -p ~/.ssh/
           touch ~/.ssh/private.key
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/private.key
           sudo chmod 600 ~/.ssh/private.key
