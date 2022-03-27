@@ -41,7 +41,7 @@ jobs:
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: ${{ secrets.TARGET_DIR }}
-          SSH_KEY_PATH: ${{ github.workspace }}/~/.ssh/private.key
+          SSH_KEY_PATH: ~/.ssh/private.key
     - name: Create ssh key
       run: |   
           mkdir -p ~/.ssh/
