@@ -44,8 +44,8 @@ jobs:
     - name: Restart the node.js app
       run: |
           echo "$SSH_PRIVATE_KEY" > private_key && chmod 600 private_key
-          cat private_key
-          # ssh -o StrictHostKeyChecking=no -i private_key ${USERNAME}@${HOST_DNS} '
+          # cat private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${USERNAME}@${HOST_DNS} '
           
             #Now we have got the access of EC2 and we will start the deploy .
             # cd /home/ec2-user/breederdao-project &&
