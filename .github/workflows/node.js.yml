@@ -51,4 +51,4 @@ jobs:
       #       # cd /home/ec2-user/breederdao-project &&
       #       # npm run build && npm run start
       #     '
-      run: echo "$SSH_PRIVATE_KEY" > private_key && chmod 600 private_key && ssh -i private_key ${USERNAME}@${HOST_DNS} 'cd /home/ec2-user/breederdao-project && npm run build && npm run start'
+      run: echo "$SSH_PRIVATE_KEY" > private_key && chmod 600 private_key && ssh -i private_key ${USERNAME}@${HOST_DNS}
