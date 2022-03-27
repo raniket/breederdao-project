@@ -10,25 +10,25 @@ on:
     branches: [ main ]
 
 jobs:
-  # build:
-  #   name: Build and test
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix:
-  #       node-version: [17.x]
-  #   steps:
-  #   - uses: actions/checkout@v2
-  #   - name: Use Node.js ${{ matrix.node-version }}
-  #     uses: actions/setup-node@v2
-  #     with:
-  #       node-version: ${{ matrix.node-version }}
-  #       cache: 'npm'
-  #   - run: npm ci
-  #   - run: npm run build --if-present
-  #   - run: npm test
+  build:
+    name: Build and test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [17.x]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm test
 
   deploy:
-    # needs: build
+    needs: build
     name: Deploy to EC2
     runs-on: ubuntu-latest
     steps:
@@ -41,18 +41,3 @@ jobs:
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: ${{ secrets.TARGET_DIR }}
-          SSH_KEY_PATH: ~/.ssh/private.key
-    - name: Create ssh key
-      run: |   
-          mkdir -p ~/.ssh/
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/private.key
-          sudo chmod 600 ~/.ssh/private.key
-          echo "$REMOTE_HOST" > ~/.ssh/known_hosts
-      shell: bash
-    - name: Restart the node.js app
-      run: |
-          echo $SSH_KEY_PATH
-          ssh -i $SSH_KEY_PATH ec2-user@43.204.32.156
-      shell: bash
-
-      # ssh -i ~/.ssh/aws-raniketisdatascientistgmaicom.cer $REMOTE_USER@$REMOTE_HOST
