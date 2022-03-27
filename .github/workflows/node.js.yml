@@ -11,14 +11,11 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [17.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
@@ -29,3 +26,18 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
+
+  deploy:
+    name: Deploy to EC2
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo "${{ secrets.EC2_SSH_KEY }} ${{ secrets.HOST_DNS }} ${{ secrets.USERNAME }} ${{ secrets./home/ec2-user }}"
+    - name: Checkout the files
+      uses: actions/checkout@v2
+    - name: Deploy to EC2 Server
+      uses: easingthemes/ssh-deploy@main
+      env:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.HOST_DNS }}
+          REMOTE_USER: ${{ secrets.USERNAME }}
+          TARGET: ${{ secrets./home/ec2-user }}
