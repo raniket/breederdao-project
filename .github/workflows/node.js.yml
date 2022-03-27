@@ -62,6 +62,8 @@ jobs:
           sudo chmod 600 ~/.ssh/private.key
           echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
           cat ~/.ssh/private.key
-          # ssh -i ~/.ssh/private.key ${USERNAME}@${HOST_DNS}
-          ssh --version
+          ssh -i ~/.ssh/private.key $REMOTE_USER@$REMOTE_HOST
+          # ssh --version
       shell: bash
+
+      # ssh -i ~/.ssh/aws-raniketisdatascientistgmaicom.cer $REMOTE_USER@$REMOTE_HOST
