@@ -43,4 +43,11 @@ jobs:
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: ${{ secrets.TARGET_DIR }}
     - name: Restart the node.js app
-      run: ssh -i ${{ secrets.EC2_SSH_KEY }} ${{ secrets.USERNAME }}@${{{ secrets.HOST_DNS }}} 'cd /home/ec2-user/breederdao-project && npm run build && npm run start'
+      run: |
+          echo "$EC2_SSH_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${USERNAME}@${HOST_DNS} '
+          
+            #Now we have got the access of EC2 and we will start the deploy .
+            cd /home/ec2-user/breederdao-project &&
+            npm run build && npm run start
+          '
