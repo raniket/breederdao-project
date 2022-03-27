@@ -60,9 +60,9 @@ jobs:
           touch ~/.ssh/private.key
           echo $SSH_PRIVATE_KEY > ~/.ssh/private.key
           sudo chmod 600 ~/.ssh/private.key
-          echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          echo $SSH_KNOWN_HOSTS > ~/.ssh/known_hosts
           cat ~/.ssh/private.key
-          ssh -i ~/.ssh/private.key $REMOTE_USER@$REMOTE_HOST
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/private.key $REMOTE_USER@$REMOTE_HOST
           # ssh --version
       shell: bash
 
