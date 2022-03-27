@@ -32,7 +32,10 @@ jobs:
     name: Deploy to EC2
     runs-on: ubuntu-latest
     steps:
-    - run: echo "${{ secrets.EC2_SSH_KEY }} ${{ secrets.HOST_DNS }} ${{ secrets.USERNAME }} ${{ secrets.TARGET_DIR }}"
+    - name: "Echo envs"
+      run: echo "${{ secrets.EC2_SSH_KEY }} ${{ secrets.HOST_DNS }} ${{ secrets.USERNAME }} ${{ secrets.TARGET_DIR }}"
+    - name: "Echo key"
+      run: echo  "$EC2_SSH_KEY"
     - name: Checkout the files
       uses: actions/checkout@v2
     - name: Deploy to EC2 Server
