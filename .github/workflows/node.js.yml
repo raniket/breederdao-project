@@ -61,5 +61,5 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/private.key
           sudo chmod 600 ~/.ssh/private.key
           echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
-          ssh -i ~/.ssh/private.key ${USERNAME}@${HOST_DNS} "cd /home/ec2-user/breederdao-project && npm run build && npm run start"
+          # ssh -i ~/.ssh/private.key ${USERNAME}@${HOST_DNS} "cd /home/ec2-user/breederdao-project && npm run build && npm run start"
       shell: bash
