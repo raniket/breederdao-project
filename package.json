@@ -4,7 +4,7 @@
   "description": "<!-- Generate node js project readme file content --> # breederdao-project",
   "main": "index.js",
   "scripts": {
-    "test": "node_modules/jest/bin/jest.js --verbose --runInBand",
+    "test": "node_modules/jest/bin/jest.js --verbose --runInBand --coverage",
     "coverage": "node_modules/jest/bin/jest.js --coverage",
     "build": "tsc",
     "start": "node ./dist/index.js"
