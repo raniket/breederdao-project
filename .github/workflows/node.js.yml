@@ -48,6 +48,11 @@ jobs:
       - name: Run deploy script
         run: ./.github/scripts/deploy.sh
         shell: bash
+      - name: Setup the .env file
+        env:
+          STAGING_ENV_FILE: ${{ secrets.STAGING_ENV_FILE }}
+          PRODUCTION_ENV_FILE: ${{ secrets.PRODUCTION_ENV_FILE }}
+        run: touch .env && echo ${PRODUCTION_ENV_FILE} > .env && chmod 777 .env && cat .env && ls -la
       - name: Restart the node app
         uses: appleboy/ssh-action@master
         with:
