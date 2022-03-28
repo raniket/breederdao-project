@@ -14,8 +14,9 @@ SECRETS=$PRODUCTION_ENV_FILE
 echo $SECRETS
 
 for secret in $SECRETS; do
-    echo $secret > .env
+    # echo $secret > .env
     echo $secret
+    echo $secret >> .env
 done
 
 ls -la
