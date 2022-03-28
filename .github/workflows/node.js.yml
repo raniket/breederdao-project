@@ -44,7 +44,7 @@ jobs:
           PRODUCTION_ENV_FILE: ${{ secrets.PRODUCTION_ENV_FILE }}
         # run: touch .env && chmod 777 .env && echo ${PRODUCTION_ENV_FILE} > .env && cat .env && ls -la
         run: |
-          touch .env && chmod 777
+          touch .env && chmod 777 .env
           SECRETS=(${PRODUCTION_ENV_FILE})
           for secret in $SECRETS; do
             echo $secret > .env
