@@ -42,7 +42,15 @@ jobs:
         env:
           STAGING_ENV_FILE: ${{ secrets.STAGING_ENV_FILE }}
           PRODUCTION_ENV_FILE: ${{ secrets.PRODUCTION_ENV_FILE }}
-        run: touch .env && chmod 777 .env && echo ${PRODUCTION_ENV_FILE} > .env && cat .env && ls -la
+        # run: touch .env && chmod 777 .env && echo ${PRODUCTION_ENV_FILE} > .env && cat .env && ls -la
+        run: |
+          touch .env && chmod 777
+          SECRETS=(${PRODUCTION_ENV_FILE})
+          for secret in $SECRETS; do
+            echo $secret > .env
+          done
+          ls -la
+          cat .env
       - name: Deploy to EC2 Server
         uses: easingthemes/ssh-deploy@main
         env:
