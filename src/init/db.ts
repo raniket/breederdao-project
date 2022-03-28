@@ -3,7 +3,7 @@ import {DB} from '../config/db';
 
 export const initDb = async () => {
     try {
-        await mongoose.connect(`mongodb+srv://${DB.USER}:${DB.PASSWORD}@${DB.HOST}/${DB.NAME}?retryWrites=true&w=majority`);
+        await mongoose.connect(DB.CONNECTION_STRING);
         console.log('Connected to DB!')
     } catch (error) {
         console.log('DB Connection failure...', error)
