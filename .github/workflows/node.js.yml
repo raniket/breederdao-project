@@ -1,7 +1,4 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
-name: Node.js CI
+name: CI/CD Pipeline
 
 on:
   push:
@@ -11,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: Build and test
+    name: Build And Test
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -26,6 +23,14 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
+    - name: Setup the .env file
+      env:
+        STAGING_ENV_FILE: ${{ secrets.STAGING_ENV_FILE }}
+        PRODUCTION_ENV_FILE: ${{ secrets.PRODUCTION_ENV_FILE }}
+      run: |
+        # [ "$YOUR_ENVIRONMENT" = qa ] && echo $STAGING_ENV_FILE | base64 --decode > .env
+        # [ "$YOUR_ENVIRONMENT" = prod ] && echo $PRODUCTION_ENV_FILE | base64 --decode > .env
+        echo $PRODUCTION_ENV_FILE | base64 --decode > .env
 
   deploy:
     needs: build
@@ -37,7 +42,7 @@ jobs:
     - name: Deploy to EC2 Server
       uses: easingthemes/ssh-deploy@main
       env:
-          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-          REMOTE_HOST: ${{ secrets.HOST_DNS }}
-          REMOTE_USER: ${{ secrets.USERNAME }}
-          TARGET: ${{ secrets.TARGET_DIR }}
+        SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+        REMOTE_HOST: ${{ secrets.HOST_DNS }}
+        REMOTE_USER: ${{ secrets.USERNAME }}
+        TARGET: ${{ secrets.TARGET_DIR }}
