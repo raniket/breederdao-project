@@ -7,30 +7,25 @@ on:
     branches: [main]
 
 jobs:
-  # build:
-  #   name: Build And Test
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix:
-  #       node-version: [17.x]
-  #   steps:
-  #   - uses: actions/checkout@v2
-  #   - name: Use Node.js ${{ matrix.node-version }}
-  #     uses: actions/setup-node@v2
-  #     with:
-  #       node-version: ${{ matrix.node-version }}
-  #       cache: 'npm'
-  #   - run: npm ci
-  #   - run: npm run build --if-present
-  #   - run: npm test
-  #   - name: Setup the .env file
-  #     env:
-  #       STAGING_ENV_FILE: ${{ secrets.STAGING_ENV_FILE }}
-  #       PRODUCTION_ENV_FILE: ${{ secrets.PRODUCTION_ENV_FILE }}
-  #     run: touch .env && echo ${PRODUCTION_ENV_FILE} > .env && chmod 777 .env && cat .env && ls -la
+  build:
+    name: Build and test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [17.x]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm test
 
   deploy:
-    # needs: build
+    needs: build
     name: Deploy to EC2
     runs-on: ubuntu-latest
     steps:
@@ -41,7 +36,7 @@ jobs:
       - name: Set Environment Variables
         env:
           PRODUCTION_ENV_FILE: ${{ secrets.PRODUCTION_ENV_FILE }}
-        run: ./.github/scripts/deploy.sh
+        run: ./.github/scripts/setup-secret.sh
         shell: bash
       - name: Deploy to EC2 Server
         uses: easingthemes/ssh-deploy@main
@@ -50,7 +45,7 @@ jobs:
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: ${{ secrets.TARGET_DIR }}
-      - name: Start the node app
+      - name: Start the app
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST_DNS }}
@@ -62,3 +57,5 @@ jobs:
             npm install
             npm run build
             nohup npm run start &
+      - name: Finalize
+        run: echo "Deployment Complete"
