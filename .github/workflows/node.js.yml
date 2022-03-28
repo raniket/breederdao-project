@@ -2,9 +2,9 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   # build:
@@ -34,17 +34,27 @@ jobs:
     name: Deploy to EC2
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout the files
-      uses: actions/checkout@v2
-      with:
-        clean: 'false'
-    - name: Deploy to EC2 Server
-      uses: easingthemes/ssh-deploy@main
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-        REMOTE_HOST: ${{ secrets.HOST_DNS }}
-        REMOTE_USER: ${{ secrets.USERNAME }}
-        TARGET: ${{ secrets.TARGET_DIR }}
-    - name: Run deploy script
-      run: ./.github/scripts/deploy.sh
-      shell: bash
+      - name: Checkout the files
+        uses: actions/checkout@v2
+        with:
+          clean: "false"
+      - name: Deploy to EC2 Server
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.HOST_DNS }}
+          REMOTE_USER: ${{ secrets.USERNAME }}
+          TARGET: ${{ secrets.TARGET_DIR }}
+      - name: Run deploy script
+        run: ./.github/scripts/deploy.sh
+        shell: bash
+      - name: multiple command
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST_DNS }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+          script: |
+            whoami
+            ls -al
