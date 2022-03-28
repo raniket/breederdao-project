@@ -61,4 +61,4 @@ jobs:
             cd breederdao-project
             npm install
             npm run build
-            (npm run start&)
+            nohup npm run start &
