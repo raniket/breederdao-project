@@ -10,6 +10,4 @@ for secret in $SECRETS; do
     echo $secret >> .env
 done
 
-cat .env
-
 echo "secret setup done!"
