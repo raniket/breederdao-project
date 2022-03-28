@@ -46,9 +46,7 @@ jobs:
         run: |
           touch .env && chmod 777 .env
           SECRETS=(${PRODUCTION_ENV_FILE})
-          for secret in $SECRETS; do
-            echo $secret > .env
-          done
+          for secret in $SECRETS; do echo $secret > .env done
           ls -la
           cat .env
       - name: Deploy to EC2 Server
