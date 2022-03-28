@@ -48,7 +48,7 @@ jobs:
       - name: Run deploy script
         run: ./.github/scripts/deploy.sh
         shell: bash
-      - name: multiple command
+      - name: Restart the node app
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST_DNS }}
@@ -56,5 +56,8 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
           script: |
-            whoami
-            ls -al
+            cd breederdao-project
+            cat .env
+            npm install
+            npm run build
+            npm run start
