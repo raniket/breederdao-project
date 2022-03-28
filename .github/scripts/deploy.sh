@@ -9,7 +9,9 @@ echo "SSH key: $EC2_SSH_KEY"
 
 touch .env && chmod 777 .env
 
-SECRETS=(${PRODUCTION_ENV_FILE})
+SECRETS=$PRODUCTION_ENV_FILE
+
+echo $SECRETS
 
 for secret in $SECRETS; do
     echo $secret > .env
