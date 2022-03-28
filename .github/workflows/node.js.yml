@@ -50,6 +50,8 @@ jobs:
         #   ls -la
         #   cat .env
       - name: SET ENVIRONMENT
+        env:
+          PRODUCTION_ENV_FILE: ${{ secrets.PRODUCTION_ENV_FILE }}
         run: ./.github/scripts/deploy.sh
         shell: bash
       - name: Deploy to EC2 Server
