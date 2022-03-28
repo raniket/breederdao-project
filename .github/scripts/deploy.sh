@@ -1,26 +1,13 @@
 #!/bin/sh
 
-ssh -V
-
-# don't want to be prompted by ssh for first time remote hosts.
-# alias ssh='ssh -o StrictHostKeyChecking=no'
-
-echo "SSH key: $EC2_SSH_KEY"
-
-touch .env && chmod 777 .env
+touch .env && chmod 600 .env
 
 SECRETS=$PRODUCTION_ENV_FILE
 
 echo $SECRETS
 
 for secret in $SECRETS; do
-    # echo $secret > .env
-    echo $secret
     echo $secret >> .env
 done
 
-ls -la
-
-cat .env
-
-echo "DONE....."
+echo "secret setup done!"
