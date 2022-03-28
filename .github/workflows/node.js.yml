@@ -27,7 +27,7 @@ jobs:
       env:
         STAGING_ENV_FILE: ${{ secrets.STAGING_ENV_FILE }}
         PRODUCTION_ENV_FILE: ${{ secrets.PRODUCTION_ENV_FILE }}
-      run: touch .env && echo ${PRODUCTION_ENV_FILE} > .env && cat .env
+      run: touch .env && echo ${PRODUCTION_ENV_FILE} > .env && cat .env && ls -la
 
   deploy:
     needs: build
